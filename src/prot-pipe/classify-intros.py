@@ -3,6 +3,7 @@
 Find introductions in the records using BERT. Use in tandem with resegment.
 """
 from functools import partial
+from pyriksdagen.dataset import IntroDataset
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from transformers import (
@@ -16,7 +17,7 @@ from valtiopy.args import (
 from valtiopy.utils import (
     elem_iter,
     parse_tei,
-    wrote_tei,
+    write_tei,
     XML_NS,
 )
 import pandas as pd
@@ -51,7 +52,7 @@ def predict_intro(df, cuda=False):
 def extract_note_seg(record):
     
     def _extract_elem(record, elem):
-        return elem.text, elem.get(f"{XML_NS}id"), recoord
+        return elem.text, elem.get(f"{XML_NS}id"), record
 
     data = []
     root, ns = parse_tei(record)
@@ -79,6 +80,9 @@ def main(args):
         full_path = f"{path_}/{file_}.xml"
         data.extend(extract_note_seg(full_path))
         intros.append(predict_intro(pd.DataFrame(data, columns=cols), cuda=args.CUDA))
+
+    df = pd.concat(intros)
+    df.to_csv(args.intros_list_path, index=False)
 
 
 
