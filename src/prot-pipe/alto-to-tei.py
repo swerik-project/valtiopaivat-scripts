@@ -17,14 +17,11 @@ import json
 
 
 
-def custom_serializer(obj):
-    try:
-        return json.JSONEncoder().default(obj)
-    except TypeError:
-        return f"Non-serializable: {type(obj).__name__}"
-
-
 def get_alto_packages(alto_files):
+    """
+    from a list of alto files, returns a set of package names,
+    i.e. the directory containing the per-page alto files
+    """
     packages = {}
     for f in alto_files:
         package = '/'.join(f.split('/')[:-1])
@@ -35,23 +32,17 @@ def get_alto_packages(alto_files):
     return packages
 
 
-def read_files(filenames):
-    for f in filenames:
-        with open(f, 'r') as inf:
-            yield inf.read()
-
-
-
-
 def main(args):
 
     tei_out = {
-            "prot": args.config.ValtiopaivatRecordsTEILocation,
-            "ptk": args.config.ValtiopaivatRecordsTEILocation,
-            "ask":args.config.ValtiopaivatHandlingarTEILocation,
-            "hand":args.config.ValtiopaivatHandlingarTEILocation,
-            "reg": args.config.ValtiopaivatRegisterTEILocation
-        }
+        "prot": args.config.ValtiopaivatRecordsTEILocation,
+        "ptk": args.config.ValtiopaivatRecordsTEILocation,
+        "ask": args.config.ValtiopaivatHandlingarTEILocation,
+        "hand": args.config.ValtiopaivatHandlingarTEILocation,
+        "bil": args.config.ValtiopaivatHandlingarTEILocation,
+        "reg": args.config.ValtiopaivatRegistersTEILocation,
+        "sis": args.config.ValtiopaivatRegistersTEILocation
+    }
 
     if args.verbose: print("Info: N alto files ==", len(args.alto_files))
     packages = get_alto_packages(args.alto_files)
