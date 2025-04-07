@@ -7,6 +7,9 @@ from tqdm import tqdm
 import os
 import shutil
 
+
+
+
 def main():
     data_dir = "valtiopaivat-records-pdf/data"
     data = glob(f"{data_dir}/*.pdf")
@@ -26,10 +29,7 @@ def main():
 
         if not os.path.isdir(f"{data_dir}/{year}"):
             os.mkdir(f"{data_dir}/{year}")
-        #print(f"{data_dir}/{year}/{'_'.join([doctype, year, chamber, num])}.pdf")
         shutil.move(pdf, f"{data_dir}/{year}/{'_'.join([doctype, year, chamber, num])}.pdf")
-
-
 
 
 
