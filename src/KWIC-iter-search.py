@@ -113,7 +113,7 @@ def main(args):
     if not args.print_only:
         logger.info("Writing file...")
         df = pd.DataFrame(rows, columns=cols)
-        df.to_csv(f"{args.out_path}/{args.out_file}_{dts}.tsv", sep="\t", index=False)
+        df.to_csv(f"{args.out_path}/{args.out_file}_{DATETIMESTRING}.tsv", sep="\t", index=False)
 
 
     logger.info("---")
