@@ -42,7 +42,7 @@ def append_matches(matches, counter, rows,
         left = txt[s-context:s]
         right = txt[e:e+context]
         prot = record.split('/')[-1][:-4]
-        gh = f"https://github.com/swerik-project/riksdagen-records/blob/{args.branch}/{record}/#L{line_number}"
+        gh = f"https://github.com/swerik-project/valtiopaivat-records/blob/{args.branch}/{record}/#L{line_number}"
         if args.print or args.print_only:
             tqdm.write(f'{prot}: {txt[s-context:s]} --| {m.group(0)} |-- {txt[e:e+context]}')
         row = [record, elem_id, elem_type, who, s, e, left, m.group(0), right, facs, gh]
